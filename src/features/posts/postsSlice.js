@@ -11,11 +11,21 @@ const postSlice = createSlice({
   reducers: {
     postAdded(state, action) {
       state.push(action.payload);
+    },
+
+    postUpdated(state, action) {
+      const { id, title, content } = action.payload;
+      const existingPost = state.find(post => post.id === id);
+
+      if (existingPost) {
+        existingPost.title = title;
+        existingPost.content = content;
+      }
     }
   }
 });
 
-// automaticly generated Action Creator postAdded
-export const { postAdded } = postSlice.actions;
+// automaticly generated Action Creators
+export const { postAdded, postUpdated } = postSlice.actions;
 
 export default postSlice.reducer;
