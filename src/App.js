@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Navbar from './app/Navbar';
+import AddPostForm from './features/posts/AddPostForm';
 import PostsList from './features/posts/PostsList';
 
 
@@ -12,7 +13,10 @@ function App() {
 
         <Switch>
           <Route exact path="/" render={() => (
-              <PostsList />
+              <>
+                <AddPostForm />
+                <PostsList />
+              </>
             )} 
           />
           <Redirect to="/" />
