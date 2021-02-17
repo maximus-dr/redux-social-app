@@ -256,3 +256,22 @@ button.reaction-button {
 .notification.new {
   background-color: rgba(29, 161, 242, 0.1);
 }
+
+input,
+textarea {
+  display: block;
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  padding: 0.75rem;
+  outline: none;
+  background: transparent;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 100%;
+  line-height: 1;
+}
+
+textarea {
+  resize: none
+}
