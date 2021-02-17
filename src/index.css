@@ -138,6 +138,8 @@ p.post-content {
   border-radius: 4px;
   font-weight: 700;
   padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  outline: none;
 }
 
 button:disabled,

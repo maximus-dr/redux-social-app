@@ -50,7 +50,7 @@ export default function AddPostForm() {
           onChange={onContentChanged} 
         />
 
-        <button type="button" onClick={onSavePostClicked}>
+        <button className="button" type="button" onClick={onSavePostClicked}>
           Save Post
         </button>
       </form>
