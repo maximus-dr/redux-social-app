@@ -76,6 +76,10 @@ const postSlice = createSlice({
   }
 });
 
+export const selectAllPosts = (state) => state.posts;
+export const selectPostById = (state, postId) =>
+  state.posts.find(post => post.id === postId);
+
 // automaticly generated Action Creators
 export const { postAdded, postUpdated, reactionAdded } = postSlice.actions;
 
