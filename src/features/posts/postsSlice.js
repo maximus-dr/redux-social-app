@@ -1,37 +1,15 @@
-// import { sub } from "date-fns";
+import db from './../../api/firebase';
+const { createSlice, nanoid, createAsyncThunk } = require("@reduxjs/toolkit");
 
-// const dummyPosts = [
-//   { 
-//     id: '1', 
-//     title: 'First post!', 
-//     content: 'Hello', 
-//     user: '0', 
-//     date: sub(new Date(), {minutes: 10}).toISOString(),
-//     reactions: {
-//       thumbsUp: 0,
-//       hooray: 0,
-//       heart: 0,
-//       rocket: 0,
-//       eyes: 0
-//     } 
-//   },
-//   { 
-//     id: '2', 
-//     title: 'Second post!', 
-//     content: 'More text', 
-//     user: '1', 
-//     date: sub(new Date(), {minutes: 5}).toISOString(),
-//     reactions: {
-//       thumbsUp: 0,
-//       hooray: 0,
-//       heart: 0,
-//       rocket: 0,
-//       eyes: 0
-//     } 
-//   }
-// ];
 
-const { createSlice, nanoid } = require("@reduxjs/toolkit");
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+  const response = await db.collection('posts').get().then(snapshot => {
+    const posts = snapshot.docs.map(doc => doc.data());
+    return posts;
+  });
+  return response;
+});
+
 
 const initialState = {
   posts: [],
@@ -86,8 +64,23 @@ const postSlice = createSlice({
         existingPost.reactions[reaction]++;
       }
     }
+  },
+  extraReducers: {
+    [fetchPosts.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [fetchPosts.fulfilled]: (state, action) => {
+      state.status = 'succeeded'
+      // Add any fetched posts to the array
+      state.posts = state.posts.concat(action.payload);
+    },
+    [fetchPosts.rejected]: (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    }
   }
 });
+
 
 export const selectAllPosts = (state) => state.posts.posts;
 export const selectPostById = (state, postId) =>
