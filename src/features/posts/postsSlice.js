@@ -10,6 +10,25 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return response;
 });
 
+export const addNewPost = createAsyncThunk('posts/addNewPost', async (post) => {
+  
+  const newPost = {
+    ...post,
+    id: nanoid(),
+    date: new Date().toISOString(),
+    reactions: {
+      thumbsUp: 0,
+      hooray: 0,
+      heart: 0,
+      rocket: 0,
+      eyes: 0
+    }
+  };
+
+  await db.collection('posts').add(newPost);
+  return newPost;
+});
+
 
 const initialState = {
   posts: [],
@@ -21,30 +40,6 @@ const postSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-
-    postAdded: {
-      reducer(state, action) {
-        state.posts.push(action.payload);
-      },
-      prepare(title, content, userId) {
-        return {
-          payload: {
-            id: nanoid(),
-            title,
-            content,
-            user: userId,
-            date: new Date().toISOString(),
-            reactions: {
-              thumbsUp: 0,
-              hooray: 0,
-              heart: 0,
-              rocket: 0,
-              eyes: 0
-            }
-          }
-        }
-      }
-    },
 
     postUpdated(state, action) {
       const { id, title, content } = action.payload;
@@ -77,6 +72,9 @@ const postSlice = createSlice({
     [fetchPosts.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
+    },
+    [addNewPost.fulfilled]: (state, action) => {
+      state.posts.push(action.payload);
     }
   }
 });
@@ -87,6 +85,6 @@ export const selectPostById = (state, postId) =>
   state.posts.posts.find(post => post.id === postId);
 
 // automaticly generated Action Creators
-export const { postAdded, postUpdated, reactionAdded } = postSlice.actions;
+export const { postUpdated, reactionAdded } = postSlice.actions;
 
 export default postSlice.reducer;
