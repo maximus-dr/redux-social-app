@@ -153,6 +153,7 @@ button.reaction-button {
   margin: 5px 6px 10px;
   border-radius: 4px;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 /* https://projects.lukehaas.me/css-loaders/ , Loader #3 */

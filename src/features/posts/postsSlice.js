@@ -1,4 +1,6 @@
 import db from './../../api/firebase';
+// import { useSelector } from 'react-redux';
+import firebase from 'firebase/app';
 const { createSlice, nanoid, createAsyncThunk } = require("@reduxjs/toolkit");
 
 
@@ -11,7 +13,6 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 });
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (post) => {
-  
   const newPost = {
     ...post,
     id: nanoid(),
@@ -24,9 +25,21 @@ export const addNewPost = createAsyncThunk('posts/addNewPost', async (post) => {
       eyes: 0
     }
   };
-
-  await db.collection('posts').add(newPost);
+  await db.collection('posts').doc(newPost.id).set({...newPost});
   return newPost;
+});
+
+export const addReaction = createAsyncThunk('posts/addReaction', async (data) => {
+  const key = `reactions.${data.reaction}`;
+  const increment = firebase.firestore.FieldValue.increment(1)
+
+  await db.collection('posts')
+    .doc(`${data.post.id}`)
+    .update({ 
+      [key] : increment
+    });
+
+  return data;
 });
 
 
@@ -75,6 +88,14 @@ const postSlice = createSlice({
     },
     [addNewPost.fulfilled]: (state, action) => {
       state.posts.push(action.payload);
+    },
+    [addReaction.fulfilled]: (state, action) => {
+      const postId = action.payload.post.id;
+      const reaction = action.payload.reaction;
+      state.posts.find(post => post.id === postId).reactions[reaction]++;
+    },
+    [addReaction.rejected]: (state, action) => {
+      console.log(action.error.message);
     }
   }
 });
