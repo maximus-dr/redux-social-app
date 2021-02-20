@@ -2,6 +2,10 @@
   --redux-color: #764abc;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -261,7 +265,8 @@ button.reaction-button {
 }
 
 input,
-textarea {
+textarea,
+select {
   display: block;
   border: 1px solid #dedede;
   border-radius: 4px;
