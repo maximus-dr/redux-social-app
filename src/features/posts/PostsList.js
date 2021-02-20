@@ -1,49 +1,44 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
-import PostAuthor from './PostAuthor';
-import ReactionButtons from './ReactionButtons';
-import TimeAgo from './TimeAgo';
 import { selectAllPosts, fetchPosts } from './postsSlice';
+import PostExcerpt from './PostExcerpt';
+
 
 export default function PostsList() {
 
   const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
-  const orderedPosts = posts.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
   const postStatus = useSelector(state => state.posts.status);
+  const error = useSelector(state => state.posts.error);
 
   useEffect(() => {
     if (postStatus === 'idle') {
       dispatch(fetchPosts());
     }
   }, [dispatch, postStatus]);
-  
 
-  const renderPosts = orderedPosts.map(post => (
+  let content;
 
-    <article className="post-excerpt" key={post.id}>
-      <h3>{post.title}</h3>
-      <div>
-        <PostAuthor userId={post.user} />
-        <TimeAgo timestamp={post.date} />
-      </div>
-      <p className="post-content">
-        {post.content.substring(0, 100)}
-      </p>
+  if (postStatus === 'loading') {
+    content = <div className="loader">Loading...</div>
+  } else if (postStatus === 'succeeded') {
+    // Sort posts in reserve chronological order by datetime string
+    const orderedPosts = posts
+      .slice()
+      .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
-      <ReactionButtons post={post} />
-      <Link to={`posts/${post.id}`} className="button muted-button">
-        View Post
-      </Link>
-    </article>
-  ))
+    content = orderedPosts.map(post => (
+      <PostExcerpt key={post.id} postId={post.id} />
+    ))
+  } else if (postStatus === 'failed') {
+    content = <div>{error}</div>
+  }
 
   return (
     <section className="posts-list">
       <h2>Posts</h2>
-      {renderPosts}
+      {content}
     </section>
   )
 }
