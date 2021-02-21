@@ -59,6 +59,14 @@ nav a:hover {
   background: #926bcf;
 }
 
+.nav {
+  display: flex;
+}
+
+.refresh {
+  margin-left: auto;
+}
+
 .navContent {
   display: flex;
   justify-content: space-between;

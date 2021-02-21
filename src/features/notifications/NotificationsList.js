@@ -37,10 +37,21 @@ export default function NotificationsList() {
     );
   });
 
+
+  let content;
+
+  if (loadingStatus === 'loading') {
+    content = <div className="loader">Loading...</div>
+  } else if (loadingStatus === 'succeeded') {
+    content = renderedNotifications;
+  } else if (loadingStatus === 'failed') {
+    content = <div>Error</div>
+  }
+
   return (
     <section className="notificationsList">
       <h2>Notifications</h2>
-      {renderedNotifications}
+      {content}
     </section>
   )
 }

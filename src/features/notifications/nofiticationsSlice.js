@@ -21,15 +21,25 @@ const initialState = {
 const notificationsSlice = createSlice({
   name: 'notifications',
   initialState,
-  reducers: {},
+  reducers: {
+    notificationsRefreshed(state, action) {
+      state.list = [];
+    }
+  },
   extraReducers: {
+    [fetchNotifications.pending]: (state, action) => {
+      state.status = 'loading';
+    },
     [fetchNotifications.fulfilled]: (state, action) => {
       state.status = 'succeeded';
+      state.list = [];
       state.list = state.list.concat(action.payload);
     }
   }
 });
 
 export const selectAllNotifications = state => state.notifications.list;
+
+export const { notificationsRefreshed } = notificationsSlice.actions;
 
 export default notificationsSlice.reducer;
