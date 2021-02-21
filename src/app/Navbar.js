@@ -11,6 +11,7 @@ export default function Navbar() {
           <div className="navLinks">
             <Link to="/">Posts</Link>
             <Link to="/users">Users</Link>
+            <Link to="/notifications">Notifications</Link>
           </div>
         </div>
       </section>
