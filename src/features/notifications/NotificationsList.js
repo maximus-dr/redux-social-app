@@ -4,20 +4,25 @@ import { selectAllNotifications, fetchNotifications } from './nofiticationsSlice
 import { selectAllUsers } from './../users/usersSlice';
 import { parseISO } from 'date-fns';
 import { formatDistanceToNow } from 'date-fns/esm';
+import classnames from 'classnames';
+
 
 export default function NotificationsList() {
 
+  const dispatch = useDispatch();
   const notifications = useSelector(selectAllNotifications);
   const users = useSelector(selectAllUsers);
   const loadingStatus = useSelector(state => state.notifications.status);
-  const dispatch = useDispatch();
+  
 
   useEffect(() => {
     if (loadingStatus === 'idle') {
       dispatch(fetchNotifications());
     }
+
   }, [dispatch, loadingStatus]);
 
+  
   const renderedNotifications = notifications.map(notification => {
     const date = parseISO(notification.date);
     const timeAgo = formatDistanceToNow(date);
@@ -25,8 +30,12 @@ export default function NotificationsList() {
       name: 'Unknown User'
     }
 
+    const notificationsClassname = classnames('notification', {
+      new: notification.isNew
+    })
+
     return (
-      <div key={notification.id} className="notification">
+      <div key={notification.id} className={notificationsClassname}>
         <div>
           <b>{user.name}</b> {notification.message}
         </div>

@@ -24,6 +24,11 @@ const notificationsSlice = createSlice({
   reducers: {
     notificationsRefreshed(state, action) {
       state.list = [];
+    },
+    allNotificationsRead(state, action) {
+      state.list.forEach(notifications => {
+        notifications.read = true;
+      })
     }
   },
   extraReducers: {
@@ -33,13 +38,17 @@ const notificationsSlice = createSlice({
     [fetchNotifications.fulfilled]: (state, action) => {
       state.status = 'succeeded';
       state.list = [];
-      state.list = state.list.concat(action.payload);
+      state.list.forEach(notification => {
+        notification.isNew = !notification.read;
+      });
+      state.list.push(...action.payload);
+      state.list.sort((a, b) => b.date.localeCompare(a.date));
     }
   }
 });
 
 export const selectAllNotifications = state => state.notifications.list;
 
-export const { notificationsRefreshed } = notificationsSlice.actions;
+export const { notificationsRefreshed, allNotificationsRead } = notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

@@ -4,10 +4,10 @@ import { selectAllPosts } from '../posts/postsSlice';
 import { selectUserById } from './usersSlice';
 import { Link } from 'react-router-dom';
 
+
 export default function UserPage({ match }) {
 
   const { userId } = match.params;
-  console.log(userId);
 
   const user = useSelector(state => selectUserById(state, userId));
 
