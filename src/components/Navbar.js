@@ -20,10 +20,7 @@ export default function Navbar() {
     dispatch(fetchNotifications());
   }
 
-  useEffect(() => {
-    dispatch(fetchNotifications());
-  }, [dispatch]);
-
+  
   return (
     <nav>
       <section>

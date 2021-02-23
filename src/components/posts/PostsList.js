@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { fetchNotifications } from '../../store/slices/nofiticationsSlice';
 import { selectAllPosts, fetchPosts } from '../../store/slices/postsSlice';
 import Post from './Post';
 
@@ -15,6 +16,7 @@ export default function PostsList() {
   useEffect(() => {
     if (postStatus === 'idle') {
       dispatch(fetchPosts());
+      dispatch(fetchNotifications());
     }
   }, [dispatch, postStatus]);
 
