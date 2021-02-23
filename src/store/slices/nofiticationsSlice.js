@@ -30,17 +30,21 @@ export const addNotification = createAsyncThunk('notifications/addNotification',
   return newNotification;
 });
 
+export const allNotificationsRead = createAsyncThunk('notifications/allNotificationsRead', async (notifications) => {
+  await notifications.forEach(notification => {
+    
+    db.collection('notifications')
+      .doc(`${notification.id}`)
+      .update({ isRead: true })
+  })
+})
+
 const notificationsSlice = createSlice({
   name: 'notifications',
   initialState,
   reducers: {
     notificationsRefreshed(state, action) {
       state.list = [];
-    },
-    allNotificationsRead(state, action) {
-      state.list.forEach(notifications => {
-        notifications.isRead = true;
-      })
     }
   },
   extraReducers: {
@@ -55,12 +59,18 @@ const notificationsSlice = createSlice({
     },
     [addNotification.fulfilled]: (state, action) => {
       state.list.push(action.payload);
+      state.list.sort((a, b) => b.date.localeCompare(a.date));
+    },
+    [allNotificationsRead.fulfilled]: (state, action) => {
+      state.list.forEach(notification => {
+        notification.isRead = true;
+      });
     }
   }
 });
 
 export const selectAllNotifications = state => state.notifications.list;
 
-export const { notificationsRefreshed, allNotificationsRead } = notificationsSlice.actions;
+export const { notificationsRefreshed } = notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

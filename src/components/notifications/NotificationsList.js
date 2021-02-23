@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAllNotifications, fetchNotifications } from '../../store/slices/nofiticationsSlice';
+import { selectAllNotifications, fetchNotifications, allNotificationsRead } from '../../store/slices/nofiticationsSlice';
 import { selectAllUsers } from '../../store/slices/usersSlice';
 import { parseISO } from 'date-fns';
 import { formatDistanceToNow } from 'date-fns/esm';
@@ -19,8 +19,10 @@ export default function NotificationsList() {
     if (loadingStatus === 'idle') {
       dispatch(fetchNotifications());
     }
-
-  }, [dispatch, loadingStatus]);
+    setTimeout(() => {
+      dispatch(allNotificationsRead(notifications));
+    }, 1200);
+  }, [dispatch, loadingStatus, notifications]);
 
   
   const renderedNotifications = notifications.map(notification => {

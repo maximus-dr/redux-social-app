@@ -8,7 +8,7 @@ export default function Navbar() {
 
   const dispatch = useDispatch();
   const notifications = useSelector(selectAllNotifications);
-  const unreadNotificationsCount = notifications.filter(n => !n.read).length;
+  const unreadNotificationsCount = notifications.filter(n => !n.isRead).length;
 
   let unreadNotificationsBadge = unreadNotificationsCount > 0 
     ? <span className="badge">
