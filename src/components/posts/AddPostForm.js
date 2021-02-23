@@ -1,6 +1,7 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { addNotification } from '../../store/slices/nofiticationsSlice';
 import { addNewPost } from '../../store/slices/postsSlice';
 
 
@@ -26,6 +27,7 @@ export default function AddPostForm() {
         setAddRequestStatus('pending');
         const resultAction = await dispatch(addNewPost({title, content, user: userId}));
         unwrapResult(resultAction);
+        dispatch(addNotification({ content, user: userId}));
         setTitle('');
         setContent('');
         setUserId('');

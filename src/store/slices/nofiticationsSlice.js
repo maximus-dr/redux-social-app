@@ -1,5 +1,5 @@
-import db from '../../api/firebase';
-const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
+import db from './../../api/firebase';
+const { createSlice, createAsyncThunk, nanoid } = require("@reduxjs/toolkit");
 
 
 const initialState = {
@@ -17,6 +17,19 @@ export const fetchNotifications = createAsyncThunk('notifications/fetchNotificat
   return response;
 });
 
+export const addNotification = createAsyncThunk('notifications/addNotification', async (post) => {
+  const newNotification = {
+    id: nanoid(),
+    date: new Date().toISOString(),
+    isRead: false,
+    user: post.user,
+    message: post.content
+  }
+
+  await db.collection('notifications').doc(newNotification.id).set({...newNotification});
+  return newNotification;
+});
+
 const notificationsSlice = createSlice({
   name: 'notifications',
   initialState,
@@ -26,7 +39,7 @@ const notificationsSlice = createSlice({
     },
     allNotificationsRead(state, action) {
       state.list.forEach(notifications => {
-        notifications.read = true;
+        notifications.isRead = true;
       })
     }
   },
@@ -37,11 +50,11 @@ const notificationsSlice = createSlice({
     [fetchNotifications.fulfilled]: (state, action) => {
       state.status = 'succeeded';
       state.list = [];
-      state.list.forEach(notification => {
-        notification.isNew = !notification.read;
-      });
       state.list.push(...action.payload);
       state.list.sort((a, b) => b.date.localeCompare(a.date));
+    },
+    [addNotification.fulfilled]: (state, action) => {
+      state.list.push(action.payload);
     }
   }
 });

@@ -31,7 +31,7 @@ export default function NotificationsList() {
     }
 
     const notificationsClassname = classnames('notification', {
-      new: notification.isNew
+      new: !notification.isRead
     })
 
     return (
