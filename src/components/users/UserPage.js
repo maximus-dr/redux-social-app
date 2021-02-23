@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { selectPostsByUser } from '../posts/postsSlice';
-import { selectUserById } from './usersSlice';
+import { selectPostsByUser } from '../../store/slices/postsSlice';
+import { selectUserById } from '../../store/slices/usersSlice';
 import { Link } from 'react-router-dom';
 
 

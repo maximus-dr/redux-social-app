@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectAllPosts, fetchPosts } from './postsSlice';
+import { selectAllPosts, fetchPosts } from '../../store/slices/postsSlice';
 import Post from './Post';
 
 

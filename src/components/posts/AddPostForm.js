@@ -1,7 +1,7 @@
 import { unwrapResult } from '@reduxjs/toolkit';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewPost } from './postsSlice';
+import { addNewPost } from '../../store/slices/postsSlice';
 
 
 export default function AddPostForm() {

@@ -1,7 +1,13 @@
 import db from './../../api/firebase';
-// import { useSelector } from 'react-redux';
 import firebase from 'firebase/app';
 const { createSlice, nanoid, createAsyncThunk, createSelector } = require("@reduxjs/toolkit");
+
+
+const initialState = {
+  posts: [],
+  status: 'idle',
+  error: null
+};
 
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
@@ -42,12 +48,6 @@ export const addReaction = createAsyncThunk('posts/addReaction', async (data) =>
   return data;
 });
 
-
-const initialState = {
-  posts: [],
-  status: 'idle',
-  error: null
-};
 
 const postSlice = createSlice({
   name: 'posts',

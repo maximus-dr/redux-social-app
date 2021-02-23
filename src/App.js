@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import Navbar from './app/Navbar';
-import AddPostForm from './features/posts/AddPostForm';
-import PostsList from './features/posts/PostsList';
-import SinglePostPage from './features/posts/SinglePostPage';
-import EditPostForm from './features/posts/EditPostForm';
-import UsersList from './features/users/UsersList';
-import UserPage from './features/users/UserPage';
-import NotificationsList from './features/notifications/NotificationsList';
+import Navbar from './components/Navbar';
+import AddPostForm from './components/posts/AddPostForm';
+import PostsList from './components/posts/PostsList';
+import SinglePostPage from './components/posts/SinglePostPage';
+import EditPostForm from './components/posts/EditPostForm';
+import UsersList from './components/users/UsersList';
+import UserPage from './components/users/UserPage';
+import NotificationsList from './components/notifications/NotificationsList';
 
 
 function App() {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchNotifications, selectAllNotifications } from '../features/notifications/nofiticationsSlice'
+import { fetchNotifications, selectAllNotifications } from '../store/slices/nofiticationsSlice'
 
 
 export default function Navbar() {

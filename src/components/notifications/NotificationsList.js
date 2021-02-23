@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAllNotifications, fetchNotifications } from './nofiticationsSlice';
-import { selectAllUsers } from './../users/usersSlice';
+import { selectAllNotifications, fetchNotifications } from '../../store/slices/nofiticationsSlice';
+import { selectAllUsers } from '../../store/slices/usersSlice';
 import { parseISO } from 'date-fns';
 import { formatDistanceToNow } from 'date-fns/esm';
 import classnames from 'classnames';

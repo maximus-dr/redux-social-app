@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom';
-import { postUpdated, selectPostById } from './postsSlice';
+import { postUpdated, selectPostById } from '../../store/slices/postsSlice';
 
 export default function EditPostForm({ match }) {
 

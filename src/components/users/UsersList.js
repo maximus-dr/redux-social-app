@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { selectAllUsers } from './usersSlice';
+import { selectAllUsers } from '../../store/slices/usersSlice';
 import { Link } from 'react-router-dom';
 
 export default function UsersList() {
