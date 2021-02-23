@@ -1,7 +1,7 @@
 import db from './../../api/firebase';
 // import { useSelector } from 'react-redux';
 import firebase from 'firebase/app';
-const { createSlice, nanoid, createAsyncThunk } = require("@reduxjs/toolkit");
+const { createSlice, nanoid, createAsyncThunk, createSelector } = require("@reduxjs/toolkit");
 
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
@@ -104,6 +104,11 @@ const postSlice = createSlice({
 export const selectAllPosts = (state) => state.posts.posts;
 export const selectPostById = (state, postId) =>
   state.posts.posts.find(post => post.id === postId);
+
+export const selectPostsByUser = createSelector(
+  [selectAllPosts, (state, userId) => userId],
+  (posts, userId) => posts.filter(post => post.user === userId)
+);
 
 // automaticly generated Action Creators
 export const { postUpdated, reactionAdded } = postSlice.actions;
