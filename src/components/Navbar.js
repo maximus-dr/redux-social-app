@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchNotifications, selectAllNotifications } from '../store/slices/nofiticationsSlice'
@@ -16,9 +16,20 @@ export default function Navbar() {
       </span>
     : null;
 
+  const loadingStatus = useSelector(state => state.notifications.status);
+  const [refreshButton, setRefreshButton] = useState('Refresh notifications');
+
   const refreshNotifications = () => {
     dispatch(fetchNotifications());
   }
+
+  useEffect(() => {
+    if (loadingStatus === 'loading') {
+      setRefreshButton('Loading...')
+    } else {
+      setRefreshButton('Refresh notifications');
+    }
+  }, [loadingStatus]);
 
   
   return (
@@ -38,7 +49,7 @@ export default function Navbar() {
           </div>
 
           <button className="button refresh" onClick={refreshNotifications}>
-            Refresh Notifications
+            {refreshButton}
           </button>
         </div>
 
