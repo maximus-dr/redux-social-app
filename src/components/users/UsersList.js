@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { selectAllUsers } from '../../store/slices/usersSlice';
 import { Link } from 'react-router-dom';
+import AddUser from './AddUser';
 
 export default function UsersList() {
 
@@ -19,6 +20,8 @@ export default function UsersList() {
     <section>
       <h2>Users</h2>
       <div>{renderedUsers}</div>
+
+      <AddUser />
     </section>
   )
 }
