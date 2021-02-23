@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectAllPosts, fetchPosts } from './postsSlice';
-import PostExcerpt from './PostExcerpt';
+import Post from './Post';
 
 
 export default function PostsList() {
@@ -29,7 +29,7 @@ export default function PostsList() {
       .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
     content = orderedPosts.map(post => (
-      <PostExcerpt key={post.id} postId={post.id} />
+      <Post key={post.id} postId={post.id} />
     ))
   } else if (postStatus === 'failed') {
     content = <div>{error}</div>

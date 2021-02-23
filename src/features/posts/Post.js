@@ -7,7 +7,7 @@ import ReactionButtons from './ReactionButtons';
 import TimeAgo from './TimeAgo';
 
 
-export default function PostExcerpt({ postId }) {
+function Post({ postId }) {
   const post = useSelector((state) => selectPostById(state, postId));
 
   return (
@@ -26,3 +26,5 @@ export default function PostExcerpt({ postId }) {
     </article>
   )
 }
+
+export default React.memo(Post);
